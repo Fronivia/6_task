@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import styles from './registration.module.scss';
+import {Link, Navigate} from "react-router-dom";
 
 export class Registration extends Component {
 
@@ -28,41 +29,46 @@ export class Registration extends Component {
 
     submitHandler = async (event) => {
         event.preventDefault();
-        console.log(this.state.password)
-        console.log(this.state.confirmedPassword)
-        const response = fetch("https://internsapi.public.osora.ru/api/auth/signup", {
+
+        fetch("https://internsapi.public.osodsadra.ru/api/auth/signup123123", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             },
-            body: JSON.stringify({name: this.state.name,
+            body: JSON.stringify({
+                name: this.state.name,
                 email: this.state.email,
                 password: this.state.password,
                 password_confirmation: this.state.confirmedPassword
             })
-        }).then((response) => response.json())
-            .then((data) => {
-                console.log('This is your data', data)
-            });
+        }).catch(e => {
+            console.error(e.message);
+        });
     }
 
     render() {
-        return(
-            <>
+
+        if (localStorage.getItem('accessToken')) {
+            return <Navigate to='/profile' replace/>
+        }
+
+        return (
+            <section className={styles.section}>
                 <h1>Регистрация</h1>
                 <form onSubmit={this.submitHandler} className={styles.form}>
-                    <input type="text" placeholder={'Введите имя'} onChange={this.loginHandler}/>
-                    <input type="email" placeholder={'Введите почту'} onChange={this.emailHandler}/>
-                    <input type="text" placeholder={'Введите пароль'} onChange={this.passwordHandler}/>
-                    <input type="text" placeholder={'Подтвердите пароль'} onChange={this.comparePasswordHandler}/>
-                    <input type="submit" value={'Зарегистрироваться'}/>
+                    <input className={styles.input} type="text" placeholder={'Введите имя'}
+                           onChange={this.loginHandler}/>
+                    <input className={styles.input} type="email" placeholder={'Введите почту'}
+                           onChange={this.emailHandler}/>
+                    <input className={styles.input} type="text" placeholder={'Введите пароль'}
+                           onChange={this.passwordHandler}/>
+                    <input className={styles.input} type="text" placeholder={'Подтвердите пароль'}
+                           onChange={this.comparePasswordHandler}/>
+                    <input className={styles.input} type="submit" value={'Зарегистрироваться'}/>
                 </form>
-            </>
+
+                <Link to='/authorization' className={styles.link}>К авторизации</Link>
+            </section>
         )
     }
 }
-// Artem
-// artemTestovoe@gmail.ru
-// Qwerty12345
-// 123
-// 123

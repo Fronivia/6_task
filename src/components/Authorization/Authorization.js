@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import styles from './authorization.module.scss';
 import {withRouter} from "../../hocs/withRouter";
+import {Link, Navigate} from "react-router-dom";
 
 class Authorization extends Component {
 
@@ -19,7 +20,7 @@ class Authorization extends Component {
 
     submitHandler = async (event) => {
         event.preventDefault();
-        const response = fetch("https://internsapi.public.osora.ru/api/auth/login", {
+        fetch("https://internsapi.public.osora.ru/api/auth/login", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
@@ -31,24 +32,33 @@ class Authorization extends Component {
         }).then((response) => response.json())
             .then((data) => {
                 if (data.status) {
-                    localStorage.setItem('accessToken', data.data.access_token)
+                    localStorage.setItem('accessToken', data.data.access_token);
                     this.props.navigate('/profile');
                 } else {
                     throw new Error('Вы не авторизировались')
                 }
+            })
+            .catch(e => {
+                console.error(e.message);
             });
     }
 
     render() {
+
+        if (localStorage.getItem('accessToken')) {
+            return <Navigate to='/profile' replace/>
+        }
+
         return (
-            <>
+            <section className={styles.section}>
                 <h1>Авторизация</h1>
                 <form className={styles.form} onSubmit={this.submitHandler}>
-                    <input type="email" placeholder={'Введите почту'} onChange={this.emailHandler}/>
-                    <input type="password" placeholder={'Введите пароль'} onChange={this.passwordHandler}/>
-                    <input type="submit" value={'Авторизация'}/>
+                    <input className={styles.input} type="email" placeholder={'Введите почту'} onChange={this.emailHandler}/>
+                    <input className={styles.input} type="password" placeholder={'Введите пароль'} onChange={this.passwordHandler}/>
+                    <input className={styles.input} type="submit" value={'Авторизация'}/>
                 </form>
-            </>
+                <Link to='/' className={styles.link}>К регистрации</Link>
+            </section>
         )
     }
 }
