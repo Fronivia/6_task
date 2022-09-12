@@ -21,6 +21,7 @@ class Authorization extends Component {
 
     submitHandler = async (event) => {
         event.preventDefault();
+        this.setState({clicked: true});
         fetch("https://internsapi.public.osora.ru/api/auth/login", {
             method: 'POST',
             headers: {
@@ -41,7 +42,10 @@ class Authorization extends Component {
             })
             .catch(e => {
                 console.error(e.message);
-            });
+            })
+            .finally(() => {
+                this.setState({clicked: false});
+            })
     }
 
     render() {

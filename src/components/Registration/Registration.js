@@ -45,7 +45,7 @@ export class Registration extends Component {
             })
         }).catch(e => {
             console.error(e.message);
-        }).then( () => {
+        }).finally( () => {
             this.setState({clicked: false})
         });
     }
