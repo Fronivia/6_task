@@ -1,6 +1,6 @@
 .section {
   width: 100vw;
-  height: auto;
+  height: 80vh;
 
   display: flex;
   flex-direction: column;
@@ -46,5 +46,12 @@
   line-height: 24px;
 
   color: black;
+  border: 2px solid black;
   border-radius: 6px;
+
+  background-color: white;
+
+  &:disabled {
+    background-color: grey;
+  }
 }

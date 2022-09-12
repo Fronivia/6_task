@@ -8,6 +8,7 @@ class Authorization extends Component {
     state = {
         email: '',
         password: '',
+        clicked: false
     };
 
     emailHandler = (event) => {
@@ -55,7 +56,7 @@ class Authorization extends Component {
                 <form className={styles.form} onSubmit={this.submitHandler}>
                     <input className={styles.input} type="email" placeholder={'Введите почту'} onChange={this.emailHandler}/>
                     <input className={styles.input} type="password" placeholder={'Введите пароль'} onChange={this.passwordHandler}/>
-                    <input className={styles.input} type="submit" value={'Авторизация'}/>
+                    <input className={styles.input} disabled={this.state.clicked} type="submit" value={'Авторизация'}/>
                 </form>
                 <Link to='/' className={styles.link}>К регистрации</Link>
             </section>

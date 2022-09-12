@@ -9,6 +9,7 @@ export class Registration extends Component {
         email: '',
         password: '',
         confirmedPassword: '',
+        clicked: false,
     };
 
     loginHandler = (event) => {
@@ -29,6 +30,7 @@ export class Registration extends Component {
 
     submitHandler = async (event) => {
         event.preventDefault();
+        this.setState({clicked: true})
 
         fetch("https://internsapi.public.osodsadra.ru/api/auth/signup123123", {
             method: 'POST',
@@ -43,6 +45,8 @@ export class Registration extends Component {
             })
         }).catch(e => {
             console.error(e.message);
+        }).then( () => {
+            this.setState({clicked: false})
         });
     }
 
@@ -64,7 +68,7 @@ export class Registration extends Component {
                            onChange={this.passwordHandler}/>
                     <input className={styles.input} type="text" placeholder={'Подтвердите пароль'}
                            onChange={this.comparePasswordHandler}/>
-                    <input className={styles.input} type="submit" value={'Зарегистрироваться'}/>
+                    <input className={styles.input} disabled={this.state.clicked} type="submit" value={'Зарегистрироваться'}/>
                 </form>
 
                 <Link to='/authorization' className={styles.link}>К авторизации</Link>

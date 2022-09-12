@@ -17,7 +17,7 @@ function App() {
                 <Route path="/question" element={<Question/>}/>
                 <Route path="/result" element={<Result/>}/>
                 <Route path='/hard_question' element={<HardQuestion/>}/>
-                <Route path="*" element={<Navigate to='/authorization' replace/>}/>
+                <Route path="*" element={<Navigate to='/' replace/>}/>
             </Routes>
         </div>
     );
